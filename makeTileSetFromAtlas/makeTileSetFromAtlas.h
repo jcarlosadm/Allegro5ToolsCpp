@@ -11,7 +11,7 @@ Esse módulo só constrói tilesets com até 999 tiles. Além disso, depende do 
 parserShoeBoxAtlas; carregue um atlas antes.
 ////////////////////////////////////////////////////////*/
 
-#include "parserShoeBoxAtlas/parserShoeBoxAtlas.h"
+#include "../parserShoeBoxAtlas/parserShoeBoxAtlas.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <iostream>
