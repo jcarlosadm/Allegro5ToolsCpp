@@ -12,7 +12,6 @@ Módulo que trata o arquivo txt gerado pelo shoebox (veja o parserShoeBoxAtlas.m
 #include <fstream>
 #include <string>
 #include <cstring>
-#include <cmath>
 using namespace std;
 
 // Estrutura dos dados de um único sprite

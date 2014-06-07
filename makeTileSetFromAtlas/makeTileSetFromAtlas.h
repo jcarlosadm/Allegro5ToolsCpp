@@ -15,6 +15,7 @@ parserShoeBoxAtlas; carregue um atlas antes.
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <iostream>
+#include <cmath>
 #include <new>
 
 class TileSet{
