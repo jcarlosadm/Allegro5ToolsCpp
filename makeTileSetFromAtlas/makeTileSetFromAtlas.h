@@ -18,6 +18,26 @@ parserShoeBoxAtlas; carregue um atlas antes.
 #include <iostream>
 #include <cmath>
 
+struct tilesetInfo{
+    // guarda a quantidade total de tiles
+    int numTilesTotal;
+    
+    // guarda a quantidade de tiles por linha
+    int numTilesRow;
+    
+    // guarda a largura do tileset
+    int wTileset;
+    
+    // guarda a altura do tileset
+    int hTileset;
+    
+    // guarda a largura de cada tile
+    int wTile;
+    
+    // guarda a altura de cada tile
+    int hTile;
+};
+
 class TileSet{
 
     private:
@@ -25,8 +45,11 @@ class TileSet{
     // guarda o tileset
     ALLEGRO_BITMAP *tileset;
     
+    // guarda informações sobre o tileset carregado
+    tilesetInfo metrics;
+    
     // desenha um tile no tileset
-    void drawTile(Atlas* atlas, ALLEGRO_BITMAP* atlasImage, const char* nametile,
+    void drawTileOnTileset(Atlas* atlas, ALLEGRO_BITMAP* atlasImage, const char* nametile,
                     int posX, int posY);
     
     public:
@@ -52,7 +75,10 @@ class TileSet{
     void destructTileset();
     
     // desenha tileset na tela
-    void drawTileSet();
+    void drawTileSetOnScreen(int xScreen, int yScreen, int option);
+    
+    // desenha um quadrado do tileset na tela
+    void drawTileOnScreen(int index, int xScreen, int yScreen, int option);
 };
 
 #endif // MAKE_TILESET_ATLAS_H

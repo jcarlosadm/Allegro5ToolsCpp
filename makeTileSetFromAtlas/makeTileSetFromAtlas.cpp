@@ -58,6 +58,12 @@ void TileSet::buildTileset(Atlas* atlas, ALLEGRO_BITMAP* atlasImage,const char* 
         return;
     }
     
+    // guarda valores no objeto para referência futura
+    metrics.numTilesTotal = numTilesTotal;
+    metrics.numTilesRow = numTilesRow;
+    metrics.wTile = tilew;
+    metrics.hTile = tileh;
+    
     // declaração de variáveis
     // w : largura do tileset, h : altura do tileset
     int w = 0, h = 0;
@@ -86,6 +92,10 @@ void TileSet::buildTileset(Atlas* atlas, ALLEGRO_BITMAP* atlasImage,const char* 
         h = tileh * ceil((float) numTilesTotal/numTilesRow);
     }
     
+    // guarda esses valores no objeto para referência futura
+    metrics.wTileset = w;
+    metrics.hTileset = h;
+    
     // cria o tileset base
     tileset = al_create_bitmap(w,h);
     
@@ -95,6 +105,7 @@ void TileSet::buildTileset(Atlas* atlas, ALLEGRO_BITMAP* atlasImage,const char* 
     // variáveis para guardar as posições x e y de cada tile no tileset
     int posX, posY;
     
+    // configura todos os desenhos no bitmap criado
     al_set_target_bitmap(tileset);
     
     // desenha cada tile no tileset
@@ -120,17 +131,17 @@ void TileSet::buildTileset(Atlas* atlas, ALLEGRO_BITMAP* atlasImage,const char* 
         posY = tileh * floor( (float) count/numTilesRow);
         
         // desenha o tile com a string criada
-        drawTile(atlas, atlasImage, nametile.c_str(), posX, posY);
+        drawTileOnTileset(atlas, atlasImage, nametile.c_str(), posX, posY);
     }
     
     al_set_target_bitmap(al_get_backbuffer(window));
 }
 
-void TileSet::drawTile(Atlas* atlas, ALLEGRO_BITMAP* atlasImage, const char* nametile,
+void TileSet::drawTileOnTileset(Atlas* atlas, ALLEGRO_BITMAP* atlasImage, const char* nametile,
                         int posX, int posY){
     
     atlas->setSpriteData(nametile);
-    cout<<nametile<<endl;
+    
     al_draw_bitmap_region(atlasImage, atlas->getSD("posX"), atlas->getSD("posY"),
                          atlas->getSD("w"),atlas->getSD("h"),atlas->getSD("offX")+posX,
                          atlas->getSD("offY")+posY,0);
@@ -144,6 +155,21 @@ void TileSet::destructTileset(){
     al_destroy_bitmap(tileset);
 }
 
-void TileSet::drawTileSet(){
-    al_draw_bitmap(tileset,0,0,0);
+void TileSet::drawTileSetOnScreen(int xScreen, int yScreen, int option){
+    al_draw_bitmap(tileset,xScreen,yScreen,option);
 }
+
+void TileSet::drawTileOnScreen(int index, int xScreen, int yScreen, int option){
+    
+    if(index<=0)return;
+    
+    index--;
+    
+    int posX = metrics.wTile * (index % metrics.numTilesRow);
+    
+    int posY = metrics.hTile * floor( (float) index/metrics.numTilesRow);
+    
+    al_draw_bitmap_region(tileset, posX, posY,metrics.wTile,metrics.hTile,xScreen,yScreen,option);
+    
+}
+
