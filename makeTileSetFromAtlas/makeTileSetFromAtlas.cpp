@@ -1,4 +1,4 @@
-#include "makeTilesFromAtlas.h"
+#include "makeTileSetFromAtlas.h"
 
 
 // procura por um tile no arquivo atlas
@@ -7,7 +7,7 @@ int searchTile(Atlas* atlas,const char* tilesName){
     
     string nametile = tilesName;
     nametile.append("001.png");
-    if(atlas->setSpriteData(nametile))
+    if(atlas->setSpriteData(nametile.c_str()))
         return 1;
     else
         return 0;
@@ -23,16 +23,21 @@ TileSet::TileSet(){
     tileset = NULL;
 }
 
-TileSet::TileSet(Atlas* atlas,const char* tilesName, int numTilesTotal, int numTilesRow, int tilew=32, int tileh=32){
+TileSet::TileSet(Atlas* atlas, ALLEGRO_BITMAP* atlasImage,const char* tilesName,
+                        int numTilesTotal, int numTilesRow, int tilew, int tileh,
+                        ALLEGRO_DISPLAY* window){
     
     // tileset aponta para NULL
     tileset = NULL;
     
     // tenta contruir o tileset
-    buildTileset(atlas,tilesName, numTilesTotal, numTilesRow,tilew,tileh);
+    buildTileset(atlas, atlasImage, tilesName, numTilesTotal, numTilesRow, tilew, tileh,
+                    window);
 }
 
-void TileSet::buildTileset(Atlas* atlas,const char* tilesName, int numTilesTotal, int numTilesRow, int tilew=32, int tileh=32){
+void TileSet::buildTileset(Atlas* atlas, ALLEGRO_BITMAP* atlasImage,const char* tilesName,
+                        int numTilesTotal, int numTilesRow, int tilew, int tileh,
+                        ALLEGRO_DISPLAY* window){
     
     //primeiro verifica se o ponteiro é diferente de NULL
     if(tileset != NULL){
@@ -84,6 +89,61 @@ void TileSet::buildTileset(Atlas* atlas,const char* tilesName, int numTilesTotal
     // cria o tileset base
     tileset = al_create_bitmap(w,h);
     
-    // desenha cada tile no tileset
+    // variável para armazenar a string de cada tile
+    string nametile;
     
+    // variáveis para guardar as posições x e y de cada tile no tileset
+    int posX, posY;
+    
+    al_set_target_bitmap(tileset);
+    
+    // desenha cada tile no tileset
+    for(int count=0;count<numTilesTotal;count++){
+        
+        // compõe a string da tile atual
+        nametile.assign(tilesName);
+        if(count+1<10){
+            nametile.append("00");
+            nametile.append(to_string(count+1).c_str());
+        }else if(count+1>9 && count+1<100){
+            nametile.append("0");
+            nametile.append(to_string(count+1).c_str());
+        }else{
+            nametile.append(to_string(count+1).c_str());
+        }
+        nametile.append(".png");
+        
+        // calcula a posição x do tile no tileset
+        posX = tilew * (count % numTilesRow);
+        
+        // calcula a posição y  do tile no tileset
+        posY = tileh * floor( (float) count/numTilesRow);
+        
+        // desenha o tile com a string criada
+        drawTile(atlas, atlasImage, nametile.c_str(), posX, posY);
+    }
+    
+    al_set_target_bitmap(al_get_backbuffer(window));
+}
+
+void TileSet::drawTile(Atlas* atlas, ALLEGRO_BITMAP* atlasImage, const char* nametile,
+                        int posX, int posY){
+    
+    atlas->setSpriteData(nametile);
+    cout<<nametile<<endl;
+    al_draw_bitmap_region(atlasImage, atlas->getSD("posX"), atlas->getSD("posY"),
+                         atlas->getSD("w"),atlas->getSD("h"),atlas->getSD("offX")+posX,
+                         atlas->getSD("offY")+posY,0);
+}
+
+TileSet::~TileSet(){
+    destructTileset();
+}
+
+void TileSet::destructTileset(){
+    al_destroy_bitmap(tileset);
+}
+
+void TileSet::drawTileSet(){
+    al_draw_bitmap(tileset,0,0,0);
 }

@@ -196,3 +196,7 @@ int Atlas::getSD(const char* attribute){
         return -1;
     }
 }
+
+int Atlas::is_open(){
+    return atlasFile.is_open();
+}

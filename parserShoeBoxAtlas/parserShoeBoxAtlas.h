@@ -118,6 +118,8 @@ class Atlas{
     // os valores de attribute podem ser: "posX", "posY", "w", "h", "offX", "offY", "origW" ou "origH".
     // (para mais informações sobre esses valores, veja a struct spriteData)
     int getSD(const char* attribute);
+    
+    int is_open();
 };
 
 #endif // READ_XML_TP
