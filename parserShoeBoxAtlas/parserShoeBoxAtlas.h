@@ -1,5 +1,10 @@
 #ifndef READ_XML_TP
 #define READ_XML_TP
+/*////////////////////////////////////////////////////////////////
+Módulo que trata o arquivo txt gerado pelo shoebox (veja o parserShoeBoxAtlas.md)
+
+/////////////////////////////////////////////////////////////////*/
+
 
 // deve usar a flag -std=c++0x no compilador, para usar a função std::stoi(), que converte de string para inteiro
 
