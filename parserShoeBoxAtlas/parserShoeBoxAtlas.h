@@ -1,20 +1,25 @@
 #ifndef READ_XML_TP
 #define READ_XML_TP
-/*////////////////////////////////////////////////////////////////
+
+/*////////////////////////////////////////////////////////////////////////
 Módulo que trata o arquivo txt gerado pelo shoebox (veja o parserShoeBoxAtlas.md)
+Também guarda a imagem do Atlas
 
-/////////////////////////////////////////////////////////////////*/
+deve usar a flag -std=c++0x no compilador, para usar a função std::stoi(),
+que converte de string para inteiro
+////////////////////////////////////////////////////////////////////////*/
 
-
-// deve usar a flag -std=c++0x no compilador, para usar a função std::stoi(), que converte de string para inteiro
-
-#include <iostream> // remover depois
+// bibliotecas Allegro necessárias
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_image.h>
+// bibliotecas padrão
+#include <iostream>
 #include <fstream>
 #include <string>
 #include <cstring>
 using namespace std;
 
-// Estrutura dos dados de um único sprite
+// Estrutura dos dados de um único sprite (o atual)
 struct spriteData{
 
     // posição x no atlas
@@ -42,13 +47,21 @@ struct spriteData{
     int origH;
 };
 
-// Classe que contém informações do Atlas
+//===========================================================================
+// Classe Atlas
+//===========================================================================
+// Classe que contém informações do Atlas, e o bitmap do atlas
+// Possui métodos de manipulação do atlas
+//===========================================================================
 class Atlas{
 
     private:
     
     // guarda o arquivo de atlas
     ifstream atlasFile;
+    
+    // guarda a imagem do atlas
+    ALLEGRO_BITMAP* atlas;
     
     // guarda dados de um sprite (para evitar grandes alocações, apenas um
     // conjunto de dados é disponível por vez)
@@ -88,6 +101,7 @@ class Atlas{
     void openFile(const char* fileName);
     
     // fecha o arquivo atlasFile manualmente
+    // e desaloca imagem atlas associada
     void closeFile();
     
     // obtem métrica do Atlas (largura ou altura)
@@ -119,7 +133,11 @@ class Atlas{
     // (para mais informações sobre esses valores, veja a struct spriteData)
     int getSD(const char* attribute);
     
+    // Função que verifica se o arquivo atlasFile está aberto
     int is_open();
+    
+    // Função que retorna a imagem do atlas
+    ALLEGRO_BITMAP* getAtlas();
 };
 
 #endif // READ_XML_TP

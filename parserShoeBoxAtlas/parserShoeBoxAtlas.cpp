@@ -2,6 +2,11 @@
 
 // Para maiores detalhes de uso, veja parserShoeBoxAtlas.h
 
+//////////////////////////////////////////////////////////
+//              Funções auxiliares                      //
+//////////////////////////////////////////////////////////
+
+
 // Configura todos os valores de currentSprite para -1, significando
 // que não há sprite atual com dados disponível
 void resetSpriteVal(spriteData *currentSprite){
@@ -19,25 +24,33 @@ void resetSpriteVal(spriteData *currentSprite){
 //              funções membros de Atlas                  //
 ////////////////////////////////////////////////////////////
 
+// contrutor padrão
 Atlas::Atlas(){
     // configura todos os valores de currentSprite para -1
     resetSpriteVal(&currentSprite);
+    
+    // a imagem atlas aponta para nulo
+    atlas = NULL;
 }
 
+// contrutor com parâmetros
 Atlas::Atlas(const char* fileName){
     // configura todos os valores de currentSprite para -1
     resetSpriteVal(&currentSprite);
-    // tenta abrir o arquivo solicitado
+    // tenta abrir o arquivo solicitado e a imagem
     openFile(fileName);
 }
 
+// destrutor
 Atlas::~Atlas(){
     
     // fecha atlasFile se estiver aberto
+    // desaloca atlas se diferente de NULL
     closeFile();
     
 }
 
+// função que abre o arquivo com informações do atlas e carrega a imagem
 void Atlas::openFile(const char* fileName){
     
     // abre o arquivo
@@ -49,18 +62,36 @@ void Atlas::openFile(const char* fileName){
         
         // fecha atlasFile se estiver aberto
         closeFile();
+        
+        // imagem atlas aponta para nulo
+        atlas = NULL;
+        
+    // caso contrário...
+    }else{
+        
+        // compõe o nome da imagem atlas
+        string imagename;
+        imagename.assign(fileName);
+        imagename.assign(imagename.begin()+0,imagename.end()-3);
+        imagename.append("png");
+        
+        // carrega a imagem
+        atlas = al_load_bitmap(imagename.c_str());
     }
 }
 
+// feacha arquivo e desaloca imagem associada
 void Atlas::closeFile(){
     
     // fecha o atlasFile se estiver aberto
-    if(atlasFile.is_open()){
-        atlasFile.close();
-    }
+    if(atlasFile.is_open())atlasFile.close();
+    
+    // desaloca atlas se diferente de NULL
+    if(atlas != NULL)al_destroy_bitmap(atlas);
     
 }
 
+// retorna largura ou altura do atlas
 int Atlas::getMetricAtlas(const char* type){
     
     // se o atlasFile não estiver aberto, retorna 0
@@ -95,6 +126,7 @@ int Atlas::getMetricAtlas(const char* type){
     return value;
 }
 
+// guarda informações de um sprite de acordo com a string fornecida
 int Atlas::setSpriteData(const char* spriteName){
     
     // se o atlasFile não estiver aberto, retorna 0
@@ -171,6 +203,7 @@ int Atlas::setSpriteData(const char* spriteName){
     return 0;
 }
 
+// pega uma parte da informação do sprite atual
 int Atlas::getSD(const char* attribute){
     // se o atlas não estiver aberto, sai da função com falha
     if(!atlasFile.is_open())return -1;
@@ -197,6 +230,12 @@ int Atlas::getSD(const char* attribute){
     }
 }
 
+// retorna 1 se atlasFile aberto
 int Atlas::is_open(){
     return atlasFile.is_open();
+}
+
+// retorna imagem atlas
+ALLEGRO_BITMAP* Atlas::getAtlas(){
+    return atlas;
 }
