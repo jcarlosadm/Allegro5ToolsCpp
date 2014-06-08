@@ -103,8 +103,8 @@ class TileSet{
     // obs: window é informada pois no allegro 5 precisamos informar onde estamos
     // desenhando no momento. A função buildTileset passa a desenhar no tileset e
     // depois reconfigura o desenho para a tela
-    TileSet(Atlas* atlas, const char* tilesName,
-            int numTilesTotal, int numTilesRow, int tilew, int tileh, ALLEGRO_DISPLAY* window);
+    TileSet(Atlas* atlas, const char* tilesName,int numTilesTotal, int numTilesRow,
+                int tilew, int tileh, ALLEGRO_DISPLAY* window);
     
     // Destrutor
     // libera a memória alocada do bitmap tileset chamando destructTileset
@@ -125,8 +125,8 @@ class TileSet{
     // obs: window é informada pois no allegro 5 precisamos informar onde estamos
     // desenhando no momento. A função buildTileset passa a desenhar no tileset e
     // depois reconfigura o desenho para a tela
-    void buildTileset(Atlas* atlas, const char* tilesName,
-                    int numTilesTotal, int numTilesRow, int tilew, int tileh, ALLEGRO_DISPLAY* window);
+    void buildTileset(Atlas* atlas, const char* tilesName,int numTilesTotal,
+                        int numTilesRow, int tilew, int tileh, ALLEGRO_DISPLAY* window);
     
     // Função que desaloca o bitmap tileset manualmente
     void destructTileset();
@@ -144,6 +144,9 @@ class TileSet{
     // ALLEGRO_FLIP_VERTICAL : inverte o bitmap com base no eixo x
     void drawTileSetOnScreen(int xScreen, int yScreen, int option);
     
+    // versão de drawTileSetOnScreen com option = 0
+    void drawTileSetOnScreen(int xScreen, int yScreen);
+    
     // Função que desenha um quadrado do tileset na tela
     //
     // PARÂMETROS:
@@ -158,6 +161,9 @@ class TileSet{
     // ALLEGRO_FLIP_HORIZONTAL : inverte o bitmap com base no eixo y
     // ALLEGRO_FLIP_VERTICAL : inverte o bitmap com base no eixo x
     void drawTileOnScreen(int index, int xScreen, int yScreen, int option);
+    
+    // versão de drawTileOnScreen com option = 0
+    void drawTileOnScreen(int index, int xScreen, int yScreen);
 };
 
 #endif // MAKE_TILESET_ATLAS_H

@@ -156,13 +156,12 @@ void TileSet::buildTileset(Atlas* atlas,const char* tilesName,
 void TileSet::drawTileOnTileset(Atlas* atlas, const char* nametile,
                         int posX, int posY){
     
-    // puxa informações de um tile do atlas
-    atlas->setSpriteData(nametile);
-    
-    // desenha no tileset
-    al_draw_bitmap_region(atlas->getAtlas(), atlas->getSD("posX"), atlas->getSD("posY"),
-                         atlas->getSD("w"),atlas->getSD("h"),atlas->getSD("offX")+posX,
-                         atlas->getSD("offY")+posY,0);
+    // puxa informações de um tile do atlas se nametile for válido
+    if(atlas->setSpriteData(nametile))
+        // desenha no tileset
+        al_draw_bitmap_region(atlas->getAtlas(), atlas->getSD("posX"), atlas->getSD("posY"),
+                             atlas->getSD("w"),atlas->getSD("h"),atlas->getSD("offX")+posX,
+                             atlas->getSD("offY")+posY,0);
 }
 
 // Destrutor
@@ -182,6 +181,11 @@ void TileSet::drawTileSetOnScreen(int xScreen, int yScreen, int option){
     
     // função do allegro que desenha bitmaps
     al_draw_bitmap(tileset,xScreen,yScreen,option);
+}
+
+// versão de drawTileSetOnScreen com option = 0 
+void TileSet::drawTileSetOnScreen(int xScreen, int yScreen){
+    drawTileSetOnScreen(xScreen,yScreen,0);
 }
 
 // Função que desenha um único tile na tela
@@ -206,3 +210,9 @@ void TileSet::drawTileOnScreen(int index, int xScreen, int yScreen, int option){
     
 }
 
+// versão de drawTileOnScreen com option = 0
+void TileSet::drawTileOnScreen(int index, int xScreen, int yScreen){
+    
+    // chama drawTileOnScreen com option = 0
+    drawTileOnScreen(index,xScreen,yScreen,0);
+}

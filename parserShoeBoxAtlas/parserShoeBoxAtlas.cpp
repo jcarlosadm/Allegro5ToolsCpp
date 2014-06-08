@@ -127,10 +127,10 @@ int Atlas::getMetricAtlas(const char* type){
 }
 
 // guarda informações de um sprite de acordo com a string fornecida
-int Atlas::setSpriteData(const char* spriteName){
+bool Atlas::setSpriteData(const char* spriteName){
     
     // se o atlasFile não estiver aberto, retorna 0
-    if(!atlasFile.is_open())return 0;
+    if(!atlasFile.is_open())return false;
     
     string line; // guarda a linha
     // índices para procurar caracteres específicos
@@ -194,13 +194,13 @@ int Atlas::setSpriteData(const char* spriteName){
                     }
                 }
                 // sai da função com sucesso
-                return 1;
+                return true;
             }
         }
     
     }
     // não encontrou o sprite
-    return 0;
+    return false;
 }
 
 // pega uma parte da informação do sprite atual
@@ -231,7 +231,7 @@ int Atlas::getSD(const char* attribute){
 }
 
 // retorna 1 se atlasFile aberto
-int Atlas::is_open(){
+bool Atlas::is_open(){
     return atlasFile.is_open();
 }
 

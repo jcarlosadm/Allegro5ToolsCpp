@@ -120,7 +120,7 @@ class Atlas{
     //
     // PARÂMETROS:
     // spriteName : nome do sprite, com extensão
-    int setSpriteData(const char* spriteName);
+    bool setSpriteData(const char* spriteName);
     
     // Função que retorna o valor de um dos atributos de currentSprite
     // retorna -1 se não tiver sucesso, ou se o atlasFile estiver fechado
@@ -134,7 +134,7 @@ class Atlas{
     int getSD(const char* attribute);
     
     // Função que verifica se o arquivo atlasFile está aberto
-    int is_open();
+    bool is_open();
     
     // Função que retorna a imagem do atlas
     ALLEGRO_BITMAP* getAtlas();
