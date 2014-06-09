@@ -158,6 +158,14 @@ class StatesClass{
     // stateName : nome do estado que quer desenhar
     // posX : posição x em que deseja desenhar
     // posY : posição y em que deseja desenhar
+    // option : permite inverter horizontalmente ou verticalmente (0 se nenhum dos dois)
+    //
+    // VALORES de option:
+    // ALLEGRO_FLIP_HORIZONTAL : inverte o bitmap com base no eixo y
+    // ALLEGRO_FLIP_VERTICAL : inverte o bitmap com base no eixo x
+    void drawState(const char* stateName, float posX, float posY, int option);
+    
+    // versão de drawState com option = 0
     void drawState(const char* stateName, float posX, float posY);
     
     // desenha um sprite de um state
@@ -167,8 +175,15 @@ class StatesClass{
     // spriteIndex : índice do sprite (a partir de 0)
     // posX : posição x em que deseja desenhar
     // posY : posição y em que deseja desenhar
-    void drawSprite(const char* stateName, int spriteIndex, float posX, float posY);
+    // option : permite inverter horizontalmente ou verticalmente (0 se nenhum dos dois)
+    //
+    // VALORES de option:
+    // ALLEGRO_FLIP_HORIZONTAL : inverte o bitmap com base no eixo y
+    // ALLEGRO_FLIP_VERTICAL : inverte o bitmap com base no eixo x
+    void drawSprite(const char* stateName, int spriteIndex, float posX, float posY, int option);
     
+    // versão de drawSprite com option = 0
+    void drawSprite(const char* stateName, int spriteIndex, float posX, float posY);
 };
 
 #endif// STATES_H
