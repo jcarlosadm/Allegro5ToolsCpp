@@ -236,11 +236,11 @@ bool Atlas::is_open(){
 }
 
 // versão de drawCropAtlas com opt igual a 0
-void drawCropAtlas(int posX, int posY){
+void Atlas::drawCropAtlas(int posX, int posY){
     drawCropAtlas(posX, posY, 0);
 }
 
-void drawCropAtlas(int posX, int posY, int opt){
+void Atlas::drawCropAtlas(int posX, int posY, int opt){
     al_draw_bitmap_region(atlas, currentSprite.posX, currentSprite.posY,
                              currentSprite.w, currentSprite.h, currentSprite.offX+posX,
                              currentSprite.offY+posY,opt);
