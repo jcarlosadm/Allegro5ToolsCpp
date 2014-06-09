@@ -22,6 +22,26 @@ int searchTile(Atlas* atlas,const char* tilesName){
         return 0;
 }
 
+// preenche uma informação de metrics de TileSet
+void search_info(const char* info, string &line, tilesetInfo &metrics){
+
+    // forma uma substring com a informação buscada
+    int index = line.find(info);
+    int index2 = line.find("\"",index+1);
+    int index3 = line.find("\"",index2+1);
+    string numberstr = line.substr(index2+1,index3-index2-1);
+    
+    // converte para inteiro e associa a um campo específico de metrics
+    if(info == "numTilesTotal")
+        metrics.numTilesTotal = stoi(numberstr);
+    else if(info=="numTilesRow")
+        metrics.numTilesRow = stoi(numberstr);
+    else if(info=="tileW")
+        metrics.wTile = stoi(numberstr);
+    else if(info=="tileH")
+        metrics.hTile = stoi(numberstr);
+}
+
 //======================================================================
 //   Funções membros de TileSet
 //======================================================================
@@ -34,21 +54,17 @@ TileSet::TileSet(){
 }
 
 // contrutor com argumentos
-TileSet::TileSet(Atlas* atlas,const char* tilesName,
-                        int numTilesTotal, int numTilesRow, int tilew, int tileh,
-                        ALLEGRO_DISPLAY* window){
+TileSet::TileSet(Atlas* atlas,const char* tilesName,ALLEGRO_DISPLAY* window){
     
     // tileset aponta para NULL
     tileset = NULL;
     
     // tenta contruir o tileset
-    buildTileset(atlas, tilesName, numTilesTotal, numTilesRow, tilew, tileh,
-                    window);
+    buildTileset(atlas, tilesName, window);
 }
 
 // gera tileset manualmente
 void TileSet::buildTileset(Atlas* atlas,const char* tilesName,
-                        int numTilesTotal, int numTilesRow, int tilew, int tileh,
                         ALLEGRO_DISPLAY* window){
     
     //primeiro verifica se o ponteiro é diferente de NULL
@@ -72,11 +88,43 @@ void TileSet::buildTileset(Atlas* atlas,const char* tilesName,
     
     // Passou pelos testes iniciais. É possível contruir o tileset
     
-    // guarda valores no objeto para referência futura
-    metrics.numTilesTotal = numTilesTotal;
-    metrics.numTilesRow = numTilesRow;
-    metrics.wTile = tilew;
-    metrics.hTile = tileh;
+    // abre o arquivo de texto com informações do tileset
+    ifstream tilesets_info("tilesets_info.txt");
+    
+    // se o arquivo não foi aberto adequadamente, aborta
+    if(!tilesets_info.good()){
+        cout<<"problema ao abrir o arquivo"<<endl;
+        if(tilesets_info.is_open())tilesets_info.close();
+        return;
+    }
+    
+    // aponta para o início do arquivo
+    tilesets_info.seekg(0);
+    
+    // flag para verificar se houve sucesso em buscar o tileset no arquivo
+    bool sucess = false;
+    // guarda linha
+    string line;
+    
+    // percorre todas as linhas
+    while(getline(tilesets_info,line)){
+        // se achar a linha do tileset correto, pega as informações e
+        // sai com sucesso
+        if(line.find(tilesName)!=string::npos){
+            search_info("numTilesTotal",line,metrics);
+            search_info("numTilesRow",line,metrics);
+            search_info("tileW",line,metrics);
+            search_info("tileH",line,metrics);
+            sucess=true;
+        }
+    }
+    
+    // fecha arquivo
+    if(tilesets_info.is_open())tilesets_info.close();
+    // se não houve sucesso em encontrar as informações, sai da função
+    if(!sucess)return;
+    
+    // encontrou as informações corretas. prosseguir.
     
     // declaração de variáveis
     // w : largura do tileset, h : altura do tileset
@@ -84,26 +132,26 @@ void TileSet::buildTileset(Atlas* atlas,const char* tilesName,
     
     // Calcula largura do tileset, ou w
     // se o numero total de tiles for maior ou igual ao número por linha...
-    if(numTilesTotal >= numTilesRow){
+    if(metrics.numTilesTotal >= metrics.numTilesRow){
         // w será a quantidade por linha vezes a largura de cada tile
-        w = numTilesRow*tilew;
+        w = metrics.numTilesRow*metrics.wTile;
     // caso contrário...
     }else{
         // w será a quantidade total de tiles vezes a largura de cada tile
-        w = numTilesTotal*tilew;
+        w = metrics.numTilesTotal*metrics.wTile;
     }
     
     // Calcula altura do tileset, ou h
     // Se o número total de tiles for menor ou igual a quantidade por linha...
-    if(numTilesTotal <= numTilesRow){
+    if(metrics.numTilesTotal <= metrics.numTilesRow){
         // a altura é igual a altura de um tile
-        h = tileh;
+        h = metrics.hTile;
     // caso contrário...
     }else{
         // divide a quantidade total de tiles pela quantidade por linha
         // arredonda o resultado para cima
         // multiplica pela altura de cada tile
-        h = tileh * ceil((float) numTilesTotal/numTilesRow);
+        h = metrics.hTile * ceil((float) metrics.numTilesTotal/metrics.numTilesRow);
     }
     
     // guarda esses valores no objeto para referência futura
@@ -123,7 +171,7 @@ void TileSet::buildTileset(Atlas* atlas,const char* tilesName,
     al_set_target_bitmap(tileset);
     
     // desenha cada tile no tileset
-    for(int count=0;count<numTilesTotal;count++){
+    for(int count=0;count<metrics.numTilesTotal;count++){
         
         // compõe a string da tile atual
         nametile.assign(tilesName);
@@ -139,10 +187,10 @@ void TileSet::buildTileset(Atlas* atlas,const char* tilesName,
         nametile.append(".png");
         
         // calcula a posição x do tile no tileset
-        posX = tilew * (count % numTilesRow);
+        posX = metrics.wTile * (count % metrics.numTilesRow);
         
         // calcula a posição y  do tile no tileset
-        posY = tileh * floor( (float) count/numTilesRow);
+        posY = metrics.hTile * floor( (float) count/metrics.numTilesRow);
         
         // desenha o tile com a string e posições calculadas
         drawTileOnTileset(atlas, nametile.c_str(), posX, posY);

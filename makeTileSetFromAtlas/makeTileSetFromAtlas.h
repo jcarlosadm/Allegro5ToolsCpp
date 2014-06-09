@@ -27,6 +27,7 @@ arquivo sem precisar de qualquer plugin.
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 // bibliotecas padrão necessárias
+#include <fstream>
 #include <iostream>
 #include <cmath>
 using namespace std;
@@ -74,7 +75,6 @@ class TileSet{
     // 
     // PARÂMETROS:
     // atlas : objeto da classe Atlas, com informações da imagem Atlas
-    // atlasImage : imagem Atlas (possui todas, ou quase todas, as imagens do jogo)
     // nametile : string que aparece no começo de cada tile (tile: um quadrado do tileset)
     // posX : coordenada x em que o tile é desenhado no tileset
     // posY : coordenada y em que o tile é desenhado no tileset
@@ -92,19 +92,13 @@ class TileSet{
     //
     // PARÂMETROS:
     // atlas : objeto da classe Atlas, com informações da imagem Atlas
-    // atlasImage : imagem Atlas (possui todas, ou quase todas, as imagens do jogo)
     // nametile : string que aparece no começo de cada tile (tile: um quadrado do tileset)
-    // numTilesTotal : quantidade total de tiles
-    // numTilesRow : quantidade máxima de tiles numa só linha
-    // tilew : a largura em pixels de um tile
-    // tileh : a altura em pixels de um tile
     // window : a janela de jogo
     //
     // obs: window é informada pois no allegro 5 precisamos informar onde estamos
     // desenhando no momento. A função buildTileset passa a desenhar no tileset e
     // depois reconfigura o desenho para a tela
-    TileSet(Atlas* atlas, const char* tilesName,int numTilesTotal, int numTilesRow,
-                int tilew, int tileh, ALLEGRO_DISPLAY* window);
+    TileSet(Atlas* atlas, const char* tilesName,ALLEGRO_DISPLAY* window);
     
     // Destrutor
     // libera a memória alocada do bitmap tileset chamando destructTileset
@@ -114,19 +108,13 @@ class TileSet{
     //
     // PARÂMETROS:
     // atlas : objeto da classe Atlas, com informações da imagem Atlas
-    // atlasImage : imagem Atlas (possui todas, ou quase todas, as imagens do jogo)
     // nametile : string que aparece no começo de cada tile (tile: um quadrado do tileset)
-    // numTilesTotal : quantidade total de tiles
-    // numTilesRow : quantidade máxima de tiles numa só linha
-    // tilew : a largura em pixels de um tile
-    // tileh : a altura em pixels de um tile
     // window : a janela de jogo
     //
     // obs: window é informada pois no allegro 5 precisamos informar onde estamos
     // desenhando no momento. A função buildTileset passa a desenhar no tileset e
     // depois reconfigura o desenho para a tela
-    void buildTileset(Atlas* atlas, const char* tilesName,int numTilesTotal,
-                        int numTilesRow, int tilew, int tileh, ALLEGRO_DISPLAY* window);
+    void buildTileset(Atlas* atlas, const char* tilesName,ALLEGRO_DISPLAY* window);
     
     // Função que desaloca o bitmap tileset manualmente
     void destructTileset();
