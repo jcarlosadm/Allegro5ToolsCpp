@@ -43,7 +43,7 @@ Também cada entidade deverá usar uma certa estrutura em jogo. Você deverá pa
     - squareEndX : valor x final de um possível quadrado no sprite (-1 se não houver quadrado)
     - squareEndY : valor y final de um possível quadrado no sprite (-1 se não houver quadrado)
 
-O que a classe Spritesheet recebe é o ponteiro *states*, e então aloca tudo o que for necessário alocar dentro da estrutura explicada acima. Essa classe **não** desaloca após a execução do programa! Tenha certeza de realiza essa operação após finalizar o objeto que possui o referido ponteiro *states*.
+O que a classe Spritesheet recebe é o ponteiro *states*, e então aloca tudo o que for necessário alocar dentro da estrutura explicada acima. A desalocação de memória é feita pelos destrutores das classes *list* e *vector*.
 
 O módulo **States.h** possui toda a estrutura necessária (esse módulo usa as bibliotecas *vector* e *list*).
 
@@ -51,7 +51,7 @@ O módulo **States.h** possui toda a estrutura necessária (esse módulo usa as 
 
 Aqui vem uma parte crucial do módulo. Aquele que criou ou projetou os *sprites* precisam informar aos programadores as características desses *sprites*. Isso envolve criar um arquivo de texto chamado "spritesheets_info.txt", onde cada *spritesheet* preenche cada uma das seguintes linhas (esse é um exemplo):
 
-`
+```
 spritesheet_name="HERO"
 >state="WALK" numSprites="4" LEFT?="yes" RIGHT?="yes" effect="0"
 >>frames="4" squareBegin="-1,-1" squareEnd="-1,-1"
@@ -62,7 +62,8 @@ spritesheet_name="HERO"
 >>frames="6" squareBegin="20,30" squareEnd="30,50"
 >>frames="4" squareBegin="10,40" squareEnd="20,50"
 >>frames="4" squareBegin="5,20" squareEnd="10,40"
->>frames="4" squareBegin="5,20" squareEnd="10,40"`
+>>frames="4" squareBegin="5,20" squareEnd="10,40"
+```
 
 Agora a esplicação de cada campo:
 
