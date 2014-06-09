@@ -161,6 +161,7 @@ class StatesClass{
     // option : permite inverter horizontalmente ou verticalmente (0 se nenhum dos dois)
     //
     // VALORES de option:
+    // 0 : nenhuma inversão
     // ALLEGRO_FLIP_HORIZONTAL : inverte o bitmap com base no eixo y
     // ALLEGRO_FLIP_VERTICAL : inverte o bitmap com base no eixo x
     void drawState(const char* stateName, float posX, float posY, int option);
@@ -178,6 +179,7 @@ class StatesClass{
     // option : permite inverter horizontalmente ou verticalmente (0 se nenhum dos dois)
     //
     // VALORES de option:
+    // 0 : nenhuma inversão
     // ALLEGRO_FLIP_HORIZONTAL : inverte o bitmap com base no eixo y
     // ALLEGRO_FLIP_VERTICAL : inverte o bitmap com base no eixo x
     void drawSprite(const char* stateName, int spriteIndex, float posX, float posY, int option);
