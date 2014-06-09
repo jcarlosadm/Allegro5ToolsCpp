@@ -142,10 +142,10 @@ class Atlas{
     // posX : posição x a desenhar no bitmap
     // posY : posição y a desenhar no bitmap
     // opt : flag usada pelo allegro para espelhar hortizontalmente ou verticalmente
-    void drawCropAtlas(int posX,int posY, int opt);
+    void drawCropAtlas(float posX,float posY, int opt);
     
     // versão de drawCropAtlas com opt = 0
-    void drawCropAtlas(int posX, int posY);
+    void drawCropAtlas(float posX, float posY);
 };
 
 #endif // READ_XML_TP

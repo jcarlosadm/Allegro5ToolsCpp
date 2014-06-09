@@ -42,16 +42,16 @@ struct tilesetInfo{
     int numTilesRow;
     
     // guarda a largura do tileset
-    int wTileset;
+    float wTileset;
     
     // guarda a altura do tileset
-    int hTileset;
+    float hTileset;
     
     // guarda a largura de cada tile
-    int wTile;
+    float wTile;
     
     // guarda a altura de cada tile
-    int hTile;
+    float hTile;
 };
 
 //===========================================================================
@@ -79,7 +79,7 @@ class TileSet{
     // posX : coordenada x em que o tile é desenhado no tileset
     // posY : coordenada y em que o tile é desenhado no tileset
     void drawTileOnTileset(Atlas* atlas, const char* nametile,
-                    int posX, int posY);
+                    float posX, float posY);
     
     public:
     
@@ -130,10 +130,10 @@ class TileSet{
     // 0 : não adiciona efeitos extras
     // ALLEGRO_FLIP_HORIZONTAL : inverte o bitmap com base no eixo y
     // ALLEGRO_FLIP_VERTICAL : inverte o bitmap com base no eixo x
-    void drawTileSetOnScreen(int xScreen, int yScreen, int option);
+    void drawTileSetOnScreen(float xScreen, float yScreen, int option);
     
     // versão de drawTileSetOnScreen com option = 0
-    void drawTileSetOnScreen(int xScreen, int yScreen);
+    void drawTileSetOnScreen(float xScreen, float yScreen);
     
     // Função que desenha um quadrado do tileset na tela
     //
@@ -148,10 +148,10 @@ class TileSet{
     // 0 : não adiciona efeitos extras
     // ALLEGRO_FLIP_HORIZONTAL : inverte o bitmap com base no eixo y
     // ALLEGRO_FLIP_VERTICAL : inverte o bitmap com base no eixo x
-    void drawTileOnScreen(int index, int xScreen, int yScreen, int option);
+    void drawTileOnScreen(int index, float xScreen, float yScreen, int option);
     
     // versão de drawTileOnScreen com option = 0
-    void drawTileOnScreen(int index, int xScreen, int yScreen);
+    void drawTileOnScreen(int index, float xScreen, float yScreen);
 };
 
 #endif // MAKE_TILESET_ATLAS_H

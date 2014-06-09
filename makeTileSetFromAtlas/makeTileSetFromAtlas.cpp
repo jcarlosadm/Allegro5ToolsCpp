@@ -37,9 +37,9 @@ void search_info(const char* info, string &line, tilesetInfo &metrics){
     else if(info=="numTilesRow")
         metrics.numTilesRow = stoi(numberstr);
     else if(info=="tileW")
-        metrics.wTile = stoi(numberstr);
+        metrics.wTile = stof(numberstr);
     else if(info=="tileH")
-        metrics.hTile = stoi(numberstr);
+        metrics.hTile = stof(numberstr);
 }
 
 //======================================================================
@@ -128,7 +128,7 @@ void TileSet::buildTileset(Atlas* atlas,const char* tilesName,
     
     // declaração de variáveis
     // w : largura do tileset, h : altura do tileset
-    int w = 0, h = 0;
+    float w = 0, h = 0;
     
     // Calcula largura do tileset, ou w
     // se o numero total de tiles for maior ou igual ao número por linha...
@@ -165,7 +165,7 @@ void TileSet::buildTileset(Atlas* atlas,const char* tilesName,
     string nametile;
     
     // variáveis para guardar as posições x e y de cada tile no tileset
-    int posX, posY;
+    float posX, posY;
     
     // configura para que todos os desenhos sejam feitos no tileset
     al_set_target_bitmap(tileset);
@@ -202,7 +202,7 @@ void TileSet::buildTileset(Atlas* atlas,const char* tilesName,
 
 // Função que desenha um tile no tileset
 void TileSet::drawTileOnTileset(Atlas* atlas, const char* nametile,
-                        int posX, int posY){
+                        float posX, float posY){
     
     // puxa informações de um tile do atlas se nametile for válido
     if(atlas->setSpriteData(nametile))
@@ -223,21 +223,21 @@ void TileSet::destructTileset(){
 }
 
 // Desenha tileset na tela (para teste, por exemplo)
-void TileSet::drawTileSetOnScreen(int xScreen, int yScreen, int option){
+void TileSet::drawTileSetOnScreen(float xScreen, float yScreen, int option){
     
     // função do allegro que desenha bitmaps
     al_draw_bitmap(tileset,xScreen,yScreen,option);
 }
 
 // versão de drawTileSetOnScreen com option = 0 
-void TileSet::drawTileSetOnScreen(int xScreen, int yScreen){
+void TileSet::drawTileSetOnScreen(float xScreen, float yScreen){
     drawTileSetOnScreen(xScreen,yScreen,0);
 }
 
 // Função que desenha um único tile na tela
 // Essa função será usada por outra classe para desenhar um mapa inteiro
 // usando informações do tileset
-void TileSet::drawTileOnScreen(int index, int xScreen, int yScreen, int option){
+void TileSet::drawTileOnScreen(int index, float xScreen, float yScreen, int option){
     
     // o índice 0 (zero) indica sem tile nessa posição
     if(index<=0)return;
@@ -246,10 +246,10 @@ void TileSet::drawTileOnScreen(int index, int xScreen, int yScreen, int option){
     index--;
     
     // calcula posição x do tile no tileset
-    int posX = metrics.wTile * (index % metrics.numTilesRow);
+    float posX = metrics.wTile * (index % metrics.numTilesRow);
     
     // calcula posição y do tile no tileset
-    int posY = metrics.hTile * floor( (float) index/metrics.numTilesRow);
+    float posY = metrics.hTile * floor( (float) index/metrics.numTilesRow);
     
     // desenha tile na tela
     al_draw_bitmap_region(tileset, posX, posY,metrics.wTile,metrics.hTile,xScreen,yScreen,option);
@@ -257,7 +257,7 @@ void TileSet::drawTileOnScreen(int index, int xScreen, int yScreen, int option){
 }
 
 // versão de drawTileOnScreen com option = 0
-void TileSet::drawTileOnScreen(int index, int xScreen, int yScreen){
+void TileSet::drawTileOnScreen(int index, float xScreen, float yScreen){
     
     // chama drawTileOnScreen com option = 0
     drawTileOnScreen(index,xScreen,yScreen,0);
