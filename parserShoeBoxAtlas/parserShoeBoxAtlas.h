@@ -1,7 +1,7 @@
 #ifndef READ_XML_TP
 #define READ_XML_TP
 
-/*////////////////////////////////////////////////////////////////////////
+/** ////////////////////////////////////////////////////////////////////////
 Módulo que trata o arquivo txt gerado pelo shoebox (veja o parserShoeBoxAtlas.md)
 Também guarda a imagem do Atlas
 
@@ -47,12 +47,15 @@ struct spriteData{
     int origH;
 };
 
+/**
 //===========================================================================
 // Classe Atlas
 //===========================================================================
 // Classe que contém informações do Atlas, e o bitmap do atlas
 // Possui métodos de manipulação do atlas
 //===========================================================================
+*/
+
 class Atlas{
 
     private:

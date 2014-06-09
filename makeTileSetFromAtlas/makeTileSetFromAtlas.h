@@ -1,7 +1,7 @@
 #ifndef MAKE_TILESET_ATLAS_H
 #define MAKE_TILESET_ATLAS_H
 
-/*////////////////////////////////////////////////////////////////////////////
+/** ////////////////////////////////////////////////////////////////////////////
 Módulo que cria um tileset, usando a biblioteca allegro 5. Considere tileset
 como o conjunto de imagens inidividuais usadas para criar mapas
 
@@ -54,6 +54,7 @@ struct tilesetInfo{
     float hTile;
 };
 
+/**
 //===========================================================================
 // Classe TileSet
 //===========================================================================
@@ -61,6 +62,7 @@ struct tilesetInfo{
 // Guarda informações do tileset como um todo
 // Possui métodos para manipulação do tileset
 //===========================================================================
+*/
 class TileSet{
 
     private:

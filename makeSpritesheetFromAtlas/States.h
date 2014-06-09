@@ -1,7 +1,7 @@
 #ifndef STATES_H
 #define STATES_H
 
-/*//////////////////////////////////////////////////////////////////////////
+/** //////////////////////////////////////////////////////////////////////////
 Módulo que descreve os estados de sprites, a ser usado por entidades tais como
 player e enemy
 
@@ -59,12 +59,14 @@ struct stateNode{
     ALLEGRO_BITMAP* image;
 };
 
+/**
 //=======================================================================
 // Classe StatesClass
 //=======================================================================
 // Classe que contém todos os estados e suas características, além
 // de funções de manipulação dessas características.
 //=======================================================================
+*/
 class StatesClass{
     
     private:
