@@ -207,9 +207,7 @@ void TileSet::drawTileOnTileset(Atlas* atlas, const char* nametile,
     // puxa informações de um tile do atlas se nametile for válido
     if(atlas->setSpriteData(nametile))
         // desenha no tileset
-        al_draw_bitmap_region(atlas->getAtlas(), atlas->getSD("posX"), atlas->getSD("posY"),
-                             atlas->getSD("w"),atlas->getSD("h"),atlas->getSD("offX")+posX,
-                             atlas->getSD("offY")+posY,0);
+        atlas->drawCropAtlas(posX,posY);
 }
 
 // Destrutor

@@ -136,8 +136,16 @@ class Atlas{
     // Função que verifica se o arquivo atlasFile está aberto
     bool is_open();
     
-    // Função que retorna a imagem do atlas
-    ALLEGRO_BITMAP* getAtlas();
+    // Função que desenha parte do atlas em um bitmap
+    //
+    // PARÂMETROS:
+    // posX : posição x a desenhar no bitmap
+    // posY : posição y a desenhar no bitmap
+    // opt : flag usada pelo allegro para espelhar hortizontalmente ou verticalmente
+    void drawCropAtlas(int posX,int posY, int opt);
+    
+    // versão de drawCropAtlas com opt = 0
+    void drawCropAtlas(int posX, int posY);
 };
 
 #endif // READ_XML_TP

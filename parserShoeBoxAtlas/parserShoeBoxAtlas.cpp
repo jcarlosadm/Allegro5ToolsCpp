@@ -235,7 +235,13 @@ bool Atlas::is_open(){
     return atlasFile.is_open();
 }
 
-// retorna imagem atlas
-ALLEGRO_BITMAP* Atlas::getAtlas(){
-    return atlas;
+// versão de drawCropAtlas com opt igual a 0
+void drawCropAtlas(int posX, int posY){
+    drawCropAtlas(posX, posY, 0);
+}
+
+void drawCropAtlas(int posX, int posY, int opt){
+    al_draw_bitmap_region(atlas, currentSprite.posX, currentSprite.posY,
+                             currentSprite.w, currentSprite.h, currentSprite.offX+posX,
+                             currentSprite.offY+posY,opt);
 }
