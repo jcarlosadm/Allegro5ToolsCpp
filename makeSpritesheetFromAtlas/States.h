@@ -22,6 +22,13 @@ using namespace std;
 // estrutura que contém as características de cada sprite
 struct spriteNode{
     
+    // imagem do sprite
+    ALLEGRO_BITMAP* image;
+    
+    
+    float width;
+    float height;
+    
     // quantidade de frames que o sprite executa
     // quando há apenas um sprite em um estado, esse valor não é usado
     int frames;
@@ -54,9 +61,6 @@ struct stateNode{
     
     // vetor de sprites (vetor possui índice)
     vector<spriteNode> sprites;
-    
-    // imagem com todos os sprites do estado
-    ALLEGRO_BITMAP* image;
 };
 
 /**
@@ -99,7 +103,7 @@ class StatesClass{
     // e "walkR", ou seja, dois estados ao invés de um. Porém, o Allegro possui funções que
     // permitem espelhar uma imagem verticalmente, então você só precisa de um estado "walk".
     // leve isso em consideração quando for definir o nome do estado.
-    void addState(const char* stateName, int nsprites, int effect, ALLEGRO_BITMAP* image);
+    void addState(const char* stateName, int nsprites, int effect);
     
     // adiciona todos os sprites para o state já criado
     //
@@ -118,8 +122,9 @@ class StatesClass{
     //
     // obs : os arrays devem ter uma quantidade de elementos igual a quantidade
     // de sprites do estado
-    void addSpritesToState(const char* stateName, int* frames, float* squareBeginX,
-                            float* squareBeginY, float* squareEndX, float* squareEndY);
+    void addSpriteToState(const char* stateName,float w,float h, int frames, float squareBeginX,
+                            float squareBeginY, float squareEndX, float squareEndY,
+                            ALLEGRO_BITMAP* image);
     
     // pega um vetor de strings, o apaga (se houver algo) e o preenche com
     // os nomes dos states do objeto
@@ -151,7 +156,7 @@ class StatesClass{
     // valueName : o nome da característica procurada
     //
     // VALORES de valueName:
-    // "frames", "squareBeginX", "squareBeginY", "squareEndX", "squareEndY"
+    // "width","height","frames", "squareBeginX", "squareBeginY", "squareEndX", "squareEndY"
     int getSpV(const char* stateName, int spriteIndex,const char* valueName);
     
     // desenha todo o conjunto de sprites de um state
