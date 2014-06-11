@@ -39,7 +39,7 @@ Também cada entidade deverá usar uma certa estrutura em jogo. Você deverá pa
     - heightSprites: a largura de cada sprite do estado.
     - effect: número que indica o sprite do estado em que começa a ativar algum efeito (0 se não houver efeito a ser ativado).
     - sprites : ponteiro que aponta para um vetor de sprites
-- sprite : um nó do vetor de sprites, que possui a seguinte estrutura:
+- spriteNode: um nó do vetor de sprites, que possui a seguinte estrutura:
     - frames : quantidade de frames executados para o sprite. é o tempo de execução do sprite.
     - squareBeginX : valor x inicial de um possível quadrado no sprite (-1 se não houver quadrado)
     - squareBeginY : valor y inicial de um possível quadrado no sprite (-1 se não houver quadrado)
