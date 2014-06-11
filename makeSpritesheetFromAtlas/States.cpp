@@ -28,7 +28,25 @@ bool searchState(list<stateNode> &states,const char* stateName,
 StatesClass::StatesClass(){}
 
 // destrutor
-StatesClass::~StatesClass(){}
+StatesClass::~StatesClass(){
+    
+    // desaloca as imagens de cada sprite de cada estado
+    // primeiro declara o iterator pointer
+    list<stateNode>::iterator pointer;
+    
+    // percorre todos os estados
+    for(pointer=states.begin(); pointer != states.end(); pointer++){
+        
+        // percorre todos os sprites
+        for(int i = 0; i < pointer->sprites.size(); i++){
+            
+            // destroi o bitmap
+            al_destroy_bitmap(pointer->sprites[i].image);
+            // ponteiro bitmap aponta para NULL
+            pointer->sprites[i].image = NULL;
+        }
+    }
+}
 
 // adiciona um estado na lista states
 void StatesClass::addState(const char* stateName, int nsprites, int effect){
