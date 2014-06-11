@@ -22,11 +22,6 @@ using namespace std;
 // estrutura que contém as características de cada sprite
 struct spriteNode{
     
-    float spritesheetX;
-    float spritesheetY;
-    float width;
-    float height;
-    
     // quantidade de frames que o sprite executa
     // quando há apenas um sprite em um estado, esse valor não é usado
     int frames;
@@ -53,6 +48,18 @@ struct stateNode{
     // quantidade de sprites do estado
     int nsprites;
     
+    // localização x do estado no spritesheet
+    float spritesheetX;
+    
+    // localização y do estado no spritesheet
+    float spritesheetY;
+    
+    // largura de cada sprite no estado
+    float widthSprites;
+    
+    // altura de cada sprite no estado
+    float heightSprites;
+    
     // valor que indica o sprite inicial de algum efeito (como um raio)
     // se 0 (zero), então não há efeito
     int effect;
@@ -73,6 +80,7 @@ class StatesClass{
     
     private:
     
+    // guarda a imagem com todos os sprites de todos os estados
     ALLEGRO_BITMAP* spritesheet;
     
     // lista de estados
@@ -82,11 +90,17 @@ class StatesClass{
     public:
     
     // construtor padrão
+    // spritesheet aponta para NULL
     StatesClass();
     
     // destrutor
+    // Destrói spritesheet se este for não nulo
     ~StatesClass();
     
+    // Função que adiciona uma imagem para spritesheet
+    // Se spritesheet apontar para NULL, spritesheet apontará para imagem.
+    // Se spritesheet apontar para uma imagem, destrói essa imagem e o faz apontar
+    // para uma nova imagem.
     void addSpritesheet(ALLEGRO_BITMAP* image);
     
     // adiciona um estado
@@ -94,15 +108,13 @@ class StatesClass{
     // PARÂMETROS:
     // stateName : nome do estado
     // nsprites : quantidade de sprites do estado
+    // spritesheetX : a localização x do conjunto de sprites do estado no spritesheet
+    // spritesheetY : a localização y do conjunto de sprites do estado no spritesheet
+    // widthSprites: a largura de cada sprite do estado
+    // heightSprites: a altura de cada sprite do estado
     // effect : valor que indica o sprite inicial para algum efeito (0 se não há efeito)
-    // image : bitmap com todos os sprites do estado
-    // 
-    // obs : um estado pode ser tratado como dois se possui duas direções. por exemplo, temos
-    // o estado "walk", mas esse estado tem esquerda e direita. Logo, temos os estados "walkL"
-    // e "walkR", ou seja, dois estados ao invés de um. Porém, o Allegro possui funções que
-    // permitem espelhar uma imagem verticalmente, então você só precisa de um estado "walk".
-    // leve isso em consideração quando for definir o nome do estado.
-    void addState(const char* stateName, int nsprites, int effect);
+    void addState(const char* stateName, int nsprites, float spritesheetX, float spritesheetY,
+                    float widthSprites, float heightSprites, int effect);
     
     // adiciona todos os sprites para o state já criado
     //
@@ -118,11 +130,7 @@ class StatesClass{
     //              a coordenada x do ponto final de um quadrado (-1 se não há quadrado)
     // squareEndY : ponteiro que aponta para o início de um array de floats, representando
     //              a coordenada y do ponto final de um quadrado (-1 se não há quadrado)
-    //
-    // obs : os arrays devem ter uma quantidade de elementos igual a quantidade
-    // de sprites do estado
-    void addSpriteToState(const char* stateName,float spritesheetX, float spritesheetY,float width,
-                            float height, int frames, float squareBeginX,
+    void addSpriteToState(const char* stateName, int frames, float squareBeginX,
                             float squareBeginY, float squareEndX, float squareEndY);
     
     // pega um vetor de strings, o apaga (se houver algo) e o preenche com
@@ -137,17 +145,21 @@ class StatesClass{
     
     // get State Value
     // retorna o valor de uma característica de um estado
+    // retorna -1 se não encontrar o valor
+    // retorna -2 se estado não existir
     //
     // PARÂMETROS:
     // stateName : nome do estado em que se busca a informação
     // valueName : nome da informação buscada
     //
     // VALORES de valueName:
-    // "nsprites" ou "effect"
-    int getStV(const char* stateName, const char* valueName);
+    // "nsprites","spritesheetX","spritesheetY","widthSprites","heightSprites" ou "effect"
+    float getStV(const char* stateName, const char* valueName);
     
     // get Sprite Value
     // retorna o valor de uma característica de um sprite de um estado
+    // retorna -2 se não encontrar o valor
+    // retorna -3 se o estado não existir
     //
     // PARÂMETROS
     // stateName : nome do estado em que se busca a informação
@@ -155,11 +167,23 @@ class StatesClass{
     // valueName : o nome da característica procurada
     //
     // VALORES de valueName:
-    // "width","height","frames", "squareBeginX", "squareBeginY", "squareEndX", "squareEndY"
-    int getSpV(const char* stateName, int spriteIndex,const char* valueName);
+    // "frames", "squareBeginX", "squareBeginY", "squareEndX", "squareEndY"
+    float getSpV(const char* stateName, int spriteIndex,const char* valueName);
     
+    // desenha o spritesheet inteiro
+    //
+    // PARÂMETROS:
+    // posX: posição x em que desenhará o spritesheet
+    // posY: posição~y em que desenhará o spritesheet
+    // option : permite inverter horizontalmente ou verticalmente (0 se nenhum dos dois)
+    //
+    // VALORES de option:
+    // 0 : nenhuma inversão
+    // ALLEGRO_FLIP_HORIZONTAL : inverte o bitmap com base no eixo y
+    // ALLEGRO_FLIP_VERTICAL : inverte o bitmap com base no eixo x
     void drawSpritesheet(float posX, float posY, int option);
     
+    // versão de drawSpritesheet com option = 0
     void drawSpritesheet(float posX, float posY);
     
     // desenha todo o conjunto de sprites de um state

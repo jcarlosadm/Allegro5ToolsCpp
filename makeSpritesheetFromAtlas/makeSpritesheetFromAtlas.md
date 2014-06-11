@@ -14,7 +14,7 @@ Você precisa nomear cada *sprite* individual antes de empacotá-los no Atlas. A
 
 - Nome base: a string básica do *spritesheet*. Todo *sprite* precisa ter no início de seu nome.
 - Estado: Após o nome base, adicionamos um *underline* e depois o seu estado. Estados possíveis são *walk*, *attack*, *run* e assim por diante. Você pode adicionar outras strings nesta parte, indicando seja lá o que for necessário na estrutura de jogo; por exemplo, se você tem sprites virados para a esquerda ou direita, talvez tenha os estados *walkl* e *walkr*. Se há variações de armas, talvez tenha *walkBasicL* e *walkBasicR*, ou seja, andando com a arma básica para a esquerda e para a direita.
-- Ordem: Cada estado pode ter mais de um quadro. Logo devemos definir qual a ordem de cada *sprite* em um estado específico. Se há apenas um sprite, não defina essa parte.
+- Ordem: Cada estado pode ter mais de um quadro. Logo devemos definir qual a ordem de cada *sprite* em um estado específico. Se há apenas um sprite, não defina essa parte (nem coloque um *underline* após o estado).
 
 Exemplos de nomes de *sprites*: *GOBLINGUERREIRO_ATL_01.png*, *HERO_ATL_01.png*, *GOBLINGUERREIRO_DAMAGEL.png*, *GOBLINGUERREIRO_DEAD.png*, etc.
 
@@ -33,13 +33,13 @@ Também cada entidade deverá usar uma certa estrutura em jogo. Você deverá pa
 - stateNode: um nó da lista de estados, que possui a seguinte estrutura:
     - stateName: string que representa o nome do estado mais qualquer coisa que este estado possui (como equipamento e/ou direção).
     - nsprites: quantidade de sprites
+    - spritesheetX: a localização x do conjunto de sprites do estado no spritesheet.
+    - spritesheetY: a localização y do conjunto de sprites do estado no spritesheet.
+    - widthSprites: a largura de cada sprite do estado.
+    - heightSprites: a largura de cada sprite do estado.
     - effect: número que indica o sprite do estado em que começa a ativar algum efeito (0 se não houver efeito a ser ativado).
     - sprites : ponteiro que aponta para um vetor de sprites
 - sprite : um nó do vetor de sprites, que possui a seguinte estrutura:
-    - spritesheetX: coordenada x do sprite no spritesheet.
-    - spritesheetY: coordenada y do sprite no spritesheet.
-    - width: largura do sprite (todos os sprites de um mesmo estado devem possuir mesma largura)
-    - height: altura do sprite (todos os sprites de um mesmo estado devem possuir mesma altura)
     - frames : quantidade de frames executados para o sprite. é o tempo de execução do sprite.
     - squareBeginX : valor x inicial de um possível quadrado no sprite (-1 se não houver quadrado)
     - squareBeginY : valor y inicial de um possível quadrado no sprite (-1 se não houver quadrado)
