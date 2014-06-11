@@ -25,27 +25,27 @@ bool searchState(list<stateNode> &states,const char* stateName,
 //===================================================================
 
 // construtor padrão
-StatesClass::StatesClass(){}
+StatesClass::StatesClass(){
+    spritesheet = NULL;
+}
 
 // destrutor
 StatesClass::~StatesClass(){
     
-    // desaloca as imagens de cada sprite de cada estado
-    // primeiro declara o iterator pointer
-    list<stateNode>::iterator pointer;
+    // desaloca o spritesheet
+    if(spritesheet!=NULL)al_destroy_bitmap(spritesheet);
+    spritesheet=NULL;
     
-    // percorre todos os estados
-    for(pointer=states.begin(); pointer != states.end(); pointer++){
-        
-        // percorre todos os sprites
-        for(int i = 0; i < pointer->sprites.size(); i++){
-            
-            // destroi o bitmap
-            al_destroy_bitmap(pointer->sprites[i].image);
-            // ponteiro bitmap aponta para NULL
-            pointer->sprites[i].image = NULL;
-        }
+}
+
+void StatesClass::addSpritesheet(ALLEGRO_BITMAP* image){
+    
+    if(spritesheet==NULL)spritesheet = image;
+    else{
+        al_destroy_bitmap(spritesheet);
+        spritesheet = image;
     }
+    
 }
 
 // adiciona um estado na lista states
@@ -61,9 +61,9 @@ void StatesClass::addState(const char* stateName, int nsprites, int effect){
     states.push_back(state);
 }
 
-void StatesClass::addSpriteToState(const char* stateName,float w,float h, int frames, float squareBeginX,
-                            float squareBeginY, float squareEndX, float squareEndY,
-                            ALLEGRO_BITMAP* image){
+void StatesClass::addSpriteToState(const char* stateName,float spritesheetX, float spritesheetY,float width,
+                            float height, int frames, float squareBeginX,
+                            float squareBeginY, float squareEndX, float squareEndY){
     
     // procura pelo estado correto
     // declara iterator
@@ -74,14 +74,15 @@ void StatesClass::addSpriteToState(const char* stateName,float w,float h, int fr
     // cria uma nova estrutura de spriteNode e associa os valores da função
     spriteNode sprite;
     
-    sprite.image = image;
+    sprite.spritesheetX = spritesheetX;
+    sprite.spritesheetY = spritesheetY;
+    sprite.width = width;
+    sprite.height = height;
     sprite.frames = frames;
     sprite.squareBeginX = squareBeginX;
     sprite.squareBeginY = squareBeginY;
     sprite.squareEndX = squareEndX;
     sprite.squareEndY = squareEndY;
-    sprite.width = w;
-    sprite.height = h;
     // adiciona um novo sprite a caracteristica sprites de states
     pointer->sprites.push_back(sprite);
     
@@ -125,7 +126,11 @@ int StatesClass::getSpV(const char* stateName, int spriteIndex,const char* value
     string nameToCompare;
     nameToCompare.assign(valueName);
     
-    if(nameToCompare.compare("width") == 0)
+    if(nameToCompare.compare("spritesheetX") == 0)
+        return pointer->sprites[spriteIndex].spritesheetX;
+    else if(nameToCompare.compare("spritesheetX") == 0)
+        return pointer->sprites[spriteIndex].spritesheetY;
+    else if(nameToCompare.compare("width") == 0)
         return pointer->sprites[spriteIndex].width;
     else if(nameToCompare.compare("height") == 0)
         return pointer->sprites[spriteIndex].height;
@@ -144,6 +149,18 @@ int StatesClass::getSpV(const char* stateName, int spriteIndex,const char* value
     
 }
 
+void StatesClass::drawSpritesheet(float posX, float posY){
+    
+    drawSpritesheet(posX,posY,0);
+    
+}
+
+void StatesClass::drawSpritesheet(float posX, float posY, int option){
+    
+    al_draw_bitmap(spritesheet,posX,posY,option);
+    
+}
+
 void StatesClass::drawState(const char* stateName, float posX, float posY){
     
     drawState(stateName,posX,posY,0);
@@ -156,8 +173,8 @@ void StatesClass::drawState(const char* stateName, float posX, float posY, int o
     
     if(!searchState(states,stateName,pointer))return;
     
-    for(int i=0; i< pointer->sprites.size(); i++)
-        al_draw_bitmap(pointer->sprites[i].image,(pointer->sprites[i].width)*i + posX,posY,option);
+    al_draw_bitmap_region(spritesheet,pointer->sprites[0].spritesheetX,pointer->sprites[0].spritesheetY,
+    pointer->sprites[0].width * pointer->sprites.size(),pointer->sprites[0].height,posX,posY,option);
     
 }
 
@@ -171,6 +188,7 @@ void StatesClass::drawSprite(const char* stateName, int spriteIndex, float posX,
     
     if(!searchState(states,stateName,pointer))return;
     
-    al_draw_bitmap(pointer->sprites[spriteIndex].image,posX,posY,option);
+    al_draw_bitmap_region(spritesheet,pointer->sprites[0].spritesheetX,pointer->sprites[0].spritesheetY,
+    pointer->sprites[0].width,pointer->sprites[0].height,posX,posY,option);
     
 }

@@ -25,7 +25,8 @@ struct spriteNode{
     // imagem do sprite
     ALLEGRO_BITMAP* image;
     
-    
+    float spritesheetX;
+    float spritesheetY;
     float width;
     float height;
     
@@ -75,6 +76,8 @@ class StatesClass{
     
     private:
     
+    ALLEGRO_BITMAP* spritesheet;
+    
     // lista de estados
     // veja as structs stateNode e spriteNode
     list<stateNode> states;
@@ -89,6 +92,8 @@ class StatesClass{
     
     // destrutor
     ~StatesClass();
+    
+    void addSpritesheet(ALLEGRO_BITMAP* image);
     
     // adiciona um estado
     //
@@ -122,9 +127,9 @@ class StatesClass{
     //
     // obs : os arrays devem ter uma quantidade de elementos igual a quantidade
     // de sprites do estado
-    void addSpriteToState(const char* stateName,float w,float h, int frames, float squareBeginX,
-                            float squareBeginY, float squareEndX, float squareEndY,
-                            ALLEGRO_BITMAP* image);
+    void addSpriteToState(const char* stateName,float spritesheetX, float spritesheetY,float width,
+                            float height, int frames, float squareBeginX,
+                            float squareBeginY, float squareEndX, float squareEndY);
     
     // pega um vetor de strings, o apaga (se houver algo) e o preenche com
     // os nomes dos states do objeto
@@ -158,6 +163,10 @@ class StatesClass{
     // VALORES de valueName:
     // "width","height","frames", "squareBeginX", "squareBeginY", "squareEndX", "squareEndY"
     int getSpV(const char* stateName, int spriteIndex,const char* valueName);
+    
+    void drawSpritesheet(float posX, float posY, int option);
+    
+    void drawSpritesheet(float posX, float posY);
     
     // desenha todo o conjunto de sprites de um state
     //
