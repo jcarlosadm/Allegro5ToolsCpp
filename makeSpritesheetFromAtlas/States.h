@@ -22,9 +22,6 @@ using namespace std;
 // estrutura que contém as características de cada sprite
 struct spriteNode{
     
-    // imagem do sprite
-    ALLEGRO_BITMAP* image;
-    
     float spritesheetX;
     float spritesheetY;
     float width;
@@ -81,9 +78,6 @@ class StatesClass{
     // lista de estados
     // veja as structs stateNode e spriteNode
     list<stateNode> states;
-    
-    // vetor de nomes de estados do objeto
-    vector<string> stateNames;
     
     public:
     
