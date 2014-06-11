@@ -56,26 +56,26 @@ Aqui vem uma parte crucial do módulo. Aquele que criou ou projetou os *sprites*
 
 ```
 spritesheet_name="HERO"
-    state="WalkL" numSprites="4" effect="0" flipV="no" flipH="no"
-        frames="4" squareBegin="-1,-1" squareEnd="-1,-1"
-        frames="4" squareBegin="-1,-1" squareEnd="-1,-1"
-        frames="4" squareBegin="-1,-1" squareEnd="-1,-1"
-        frames="4" squareBegin="-1,-1" squareEnd="-1,-1"
-    state="WalkR" numSprites="4" effect="0" flipV="no" flipH="no"
-        frames="4" squareBegin="-1,-1" squareEnd="-1,-1"
-        frames="4" squareBegin="-1,-1" squareEnd="-1,-1"
-        frames="4" squareBegin="-1,-1" squareEnd="-1,-1"
-        frames="4" squareBegin="-1,-1" squareEnd="-1,-1"
-    state="AtL" numSprites="4" effect="0" flipV="no" flipH="no"
-        frames="6" squareBegin="20,30" squareEnd="30,50"
-        frames="4" squareBegin="10,40" squareEnd="20,50"
-        frames="4" squareBegin="5,20" squareEnd="10,40"
-        frames="4" squareBegin="5,20" squareEnd="10,40"
-    state="AtR" numSprites="4" effect="0" flipV="no" flipH="no"
-        frames="6" squareBegin="20,30" squareEnd="30,50"
-        frames="4" squareBegin="10,40" squareEnd="20,50"
-        frames="4" squareBegin="5,20" squareEnd="10,40"
-        frames="4" squareBegin="5,20" squareEnd="10,40"
+    state="WALKL" numSprites="4" effect="0" flip="no"
+        frames="4" squareBeginX="-1" squareBeginY="-1" squareEndX="-1" squareEndY="-1"
+        frames="4" squareBeginX="-1" squareBeginY="-1" squareEndX="-1" squareEndY="-1"
+        frames="4" squareBeginX="-1" squareBeginY="-1" squareEndX="-1" squareEndY="-1"
+        frames="4" squareBeginX="-1" squareBeginY="-1" squareEndX="-1" squareEndY="-1"
+    state="WALKR" numSprites="4" effect="0" flip="no"
+        frames="4" squareBeginX="-1" squareBeginY="-1" squareEndX="-1" squareEndY="-1"
+        frames="4" squareBeginX="-1" squareBeginY="-1" squareEndX="-1" squareEndY="-1"
+        frames="4" squareBeginX="-1" squareBeginY="-1" squareEndX="-1" squareEndY="-1"
+        frames="4" squareBeginX="-1" squareBeginY="-1" squareEndX="-1" squareEndY="-1"
+    state="ATL" numSprites="4" effect="0" flip="no"
+        frames="6" squareBeginX="20" squareBeginY="30" squareEndX="30" squareEndY="50"
+        frames="4" squareBeginX="10" squareBeginY="40" squareEndX="20" squareEndY="50"
+        frames="4" squareBeginX="5" squareBeginY="20" squareEndX="10" squareEndY="40"
+        frames="4" squareBeginX="5" squareBeginY="20" squareEndX="10" squareEndY="40"
+    state="ATR" numSprites="4" effect="0" flip="no"
+        frames="6" squareBeginX="20" squareBeginY="30" squareEndX="30" squareEndY="50"
+        frames="4" squareBeginX="10" squareBeginY="40" squareEndX="20" squareEndY="50"
+        frames="4" squareBeginX="5" squareBeginY="20" squareEndX="10" squareEndY="40"
+        frames="4" squareBeginX="5" squareBeginY="20" squareEndX="10" squareEndY="40"
 ```
 
 Agora a esplicação de cada campo:
@@ -83,10 +83,11 @@ Agora a esplicação de cada campo:
 - state : o estado de um conjunto de *sprites* no *spritesheet*. O nome desse state deve indicar toda variação possível (por exemplo, qual arma usa e qual direção está virado).
 - numSprites : quantidade de *sprite* daquele estado. Se igual a 1, o módulo considerará o nome do *sprite* sem a numeração de ordem.
 - effect : informa em que sprite se inicia algum efeito pretendido, como um raio. Se não há efeito pretendido, ou se não há idéia de quando se inicia (pode ser aleatório, por exemplo), informe "0".
-- flipV : se deseja inverter verticalmente a imagem (a imagem pode estar virada para a esquerda, e você deseja que fique virada para a direita), ponha *yes*. Caso contrário, *no* (se a imagem já estiver virada para o lado correto).
-- flipH : se deseja inverter horizontalmente a imagem (se quiser que fique de cabeça para baixo, por exemplo), ponha *yes*. Caso contrário, *no*.
+- flip : *H* para flip horizontal, *V* para flip vertical e *no* para nenhum dos dois.
 - frames : informa a duração de cada *sprite* deste estado na animação, em quadros (levando em consideração a quantidade de quadros por segundo do seu jogo, que em geral fica por volta de 60).
-- squareBegin: informa as coordenadas x e y do início de um quadrado, separadas por uma vírgula, na forma[x,y]. Deve ser informada. Esse quadrado pode ser usado por alguma funcionalidade de jogo (como o quadrado da espada na mão do personagem). Informe "-1,-1" se não houver quadrado associado.
-- squareEnd : informa as coordenadas x e y do fim de um quadrado, separadas por uma vírgula. Informe "-1,-1" se não houver quadrado associado.
+- squareBeginX: informa a coordenada x do início de um quadrado. Deve ser informada. Esse quadrado pode ser usado por alguma funcionalidade de jogo (como o quadrado da espada na mão do personagem). Informe "-1" se não houver quadrado associado.
+- squareBeginY: informa a coordenada y do início de um quadrado. Deve ser informada. Esse quadrado pode ser usado por alguma funcionalidade de jogo (como o quadrado da espada na mão do personagem). Informe "-1" se não houver quadrado associado.
+- squareEndX : informa a coordenada x do fim de um quadrado. Informe "-1" se não houver quadrado associado.
+- squareEndY : informa a coordenada y do fim de um quadrado. Informe "-1" se não houver quadrado associado.
 
 

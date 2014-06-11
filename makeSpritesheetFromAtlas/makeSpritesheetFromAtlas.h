@@ -16,8 +16,10 @@ Veja makeSpritesheetFromAtlas.md para mais detalhes.
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 // inclusão das bibliotecas básicas
+#include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
 
 /**
 //===========================================================================
@@ -42,7 +44,11 @@ class SpritesheetFactory{
     // states: ponteiro para o objeto da classe StatesClass a ser preenchido
     // atlas: ponteiro para o objeto da classe Atlas
     // entityStatesName: string que define o nome padrão dos estados da entidade
-    void fillStates(StatesClass* states, Atlas* atlas, const char* entityStatesName);
+    // window: a janela de jogo. Essa função muda o local de desenho para um
+    //          bitmap específico. É necessário, depois de todas as operações,
+    //          mudar novamente para a janela de jogo.
+    void fillStates(StatesClass* states, Atlas* atlas, const char* entityStatesName,
+                    ALLEGRO_DISPLAY* window);
 };
 
 #endif // MAKE_SPRITESHEET_ATLAS_H
